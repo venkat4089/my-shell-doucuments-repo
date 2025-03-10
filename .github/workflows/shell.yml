@@ -16,15 +16,15 @@ jobs:
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+          ssh-private-key: ssh -i "resume-kp.pem" ubuntu@ec2-3-7-46-33.ap-south-1.compute.amazonaws.com
 
       - name: Copy files to EC2
         run: |
-          scp -o StrictHostKeyChecking=no -r . ec2-user@${{ secrets.EC2_PUBLIC_IP }}:/home/ec2-user/your-app-directory
+          scp -o StrictHostKeyChecking=no -r . ec2-user@3.7.46.33:/home/ec2-user/your-app-directory
 
       - name: SSH into EC2 and deploy
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ec2-user@3.7.46.33 << 'EOF'
           cd /home/ec2-user/your-app-directory
           npm install
           npm start
