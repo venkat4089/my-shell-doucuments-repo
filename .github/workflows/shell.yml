@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+        ACTIONS_STEP_DEBUG: true
 
     steps:
       - name: Checkout code
@@ -16,9 +18,8 @@ jobs:
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ssh -i "resume-kp.pem" ubuntu@ec2-3-7-46-33.ap-south-1.compute.amazonaws.com 
-        env:
-          ACTIONS_STEP_DEBUG: true
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }} 
+       
 
 
       - name: Copy files to EC2
